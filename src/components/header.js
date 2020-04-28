@@ -1,33 +1,66 @@
 import React from "react"
-import { Link } from "gatsby"
+import { Link, graphql, useStaticQuery } from "gatsby"
 import headerStyles from "../styles/header.module.scss"
 
 export default function Header() {
+  const data = useStaticQuery(graphql`
+    query {
+      site {
+        siteMetadata {
+          title
+        }
+      }
+    }
+  `)
+
   return (
-    <header
-      className={headerStyles.header}
-      style={{
-        display: "flex",
-        justifyContent: "space-evenly",
-      }}
-    >
+    <header className={headerStyles.header}>
       <h3 style={{ margin: 0 }}>
         <Link className={headerStyles.title} to="/">
-          Arturas Kalandarisvili
+          {data.site.siteMetadata.title}{" "}
         </Link>
       </h3>
-      <Link to="/" className={headerStyles.link}>
-        Main
-      </Link>
-      <Link to="/contact" className={headerStyles.link}>
-        Contact
-      </Link>
-      <Link to="/blog" className={headerStyles.link}>
-        Blog
-      </Link>
-      <Link to="/about" className={headerStyles.link}>
-        About
-      </Link>
+      <nav>
+        <ul className={headerStyles.navList}>
+          <li>
+            <Link
+              to="/"
+              className={headerStyles.navItem}
+              activeClassName={headerStyles.activeNavItem}
+            >
+              Main
+            </Link>
+          </li>
+          <li>
+            {" "}
+            <Link
+              to="/contact"
+              className={headerStyles.navItem}
+              activeClassName={headerStyles.activeNavItem}
+            >
+              Contact
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/blog"
+              className={headerStyles.navItem}
+              activeClassName={headerStyles.activeNavItem}
+            >
+              Blog
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/about"
+              className={headerStyles.navItem}
+              activeClassName={headerStyles.activeNavItem}
+            >
+              About
+            </Link>
+          </li>
+        </ul>
+      </nav>
     </header>
   )
 }
